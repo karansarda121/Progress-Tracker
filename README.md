@@ -49,7 +49,15 @@ cd progress-tracker
 npm install
 npm run dev
 ```
+## Note: 
+-By default, the frontend is configured to make API calls to the production backend hosted on Render.
+You can find the Axios instance configuration in:
+client/src/services/api.js
 
+-To use your local backend instead, update the baseURL in api.js to:
+const API = axios.create({
+  baseURL: 'http://localhost:5000' // Local server
+});
 ---
 
 ## Design & Logic Explanation
