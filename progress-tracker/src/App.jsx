@@ -3,13 +3,14 @@ import axios from 'axios';
 import UploadVideo from './components/UploadVideo';
 import Sidebar from './components/Sidebar';
 import VideoPlayer from './components/VideoPlayer';
+import Api from './services/api'; // Adjust the import path as necessary
 
 function App() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const fetchVideos = async () => {
-    const res = await axios.get('http://localhost:5000/api/videos');
+    const res = await Api.get('api/videos');
     setVideos(res.data);
   };
 
@@ -25,7 +26,7 @@ function App() {
 
  const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:5000/api/videos/${id}`);
+    await Api.delete(`api/videos/${id}`);
     
     // Remove progress from localStorage
     localStorage.removeItem(`video-progress-${id}`);
@@ -38,7 +39,6 @@ function App() {
     fetchVideos();
   } catch (err) {
     console.error('Error deleting video:', err);
-    alert('Failed to delete video. Please try again.');
   }
 };
 

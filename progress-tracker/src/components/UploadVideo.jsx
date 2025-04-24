@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import Api from '../services/api'; // Adjust the import path as necessary
 
 const MAX_SIZE_MB = 100;
 
@@ -35,8 +36,8 @@ const UploadVideo = ({ onUpload }) => {
       setUploading(true);
       setStatus('Uploading... Please wait');
 
-      const res = await axios.post(
-        'http://localhost:5000/api/videos/upload',
+      const res = await Api.post(
+        'api/videos/upload',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -45,10 +46,12 @@ const UploadVideo = ({ onUpload }) => {
 
       onUpload(res.data);
       setStatus('Upload successful!');
+      setError('');
       setVideoFile(null);
     } catch (err) {
       console.error('Upload failed:', err);
       setError(err?.response?.data?.message || 'Upload failed. Try again.');
+      setStatus('');
     } finally {
       setUploading(false);
     }
